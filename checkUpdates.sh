@@ -1,7 +1,7 @@
 #! /bin/bash
 
 #configuration
-mail_address=paul.bastian@posteo.de
+mail_address=<user@domain.com>
 
 #check packages
 echo "downloading the packages with pacman..."
@@ -17,7 +17,7 @@ if [ ! -f /var/log/archm-pacman-packages.log ] || [ "$(cat /var/log/archm-pacman
 	hostname=$(cat /etc/hostname)
 	mail_header="Subject: Packages ready for install on:$hostname\n\r\n\r"
 	mail_body="The following packages are downloaded and ready install:\n\r\n\r"$pacman_packages
-	printf "$mail_header$mail_body" | msmtp "$mail_address"
+	printf "$mail_header$mail_body" | sendmail "$mail_address"
 	
 	#update revision file
 	echo "$pacman_packages" > /var/log/archm-pacman-packages.log
