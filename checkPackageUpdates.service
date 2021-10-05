@@ -1,0 +1,9 @@
+[Unit]
+Description=Check, download and notify package manager updates
+Documentation=https://github.com/librespot-org/librespot-java
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/share/arch-maintance/checkUpdates.sh
