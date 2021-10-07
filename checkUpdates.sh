@@ -5,10 +5,10 @@ mail_address=<user@domain.com>
 
 #check packages
 echo "downloading the packages with pacman..."
-pacman_log=$(sudo pacman -Sy --noconfirm --noprogressbar --downloadonly --quiet)
+pacman_log=$(pacman -Syu --noconfirm --noprogressbar --downloadonly --quiet)
 echo "$pacman_log"
 echo "listing  packages ready for install..."
-pacman_packages=$(sudo pacman -Qu)
+pacman_packages=$(pacman -Qu)
 
 #compare with recent result
 if [ ! -f /var/log/archm-pacman-packages.log ] || [ "$(cat /var/log/archm-pacman-packages.log)" != "$pacman_packages" ]; then
