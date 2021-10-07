@@ -1,7 +1,7 @@
 #! /bin/bash
 
 #configuration
-mail_address=<user@domain.com>
+mail_address=root
 
 #check packages
 echo "downloading the packages with pacman..."
@@ -9,9 +9,14 @@ pacman_log=$(pacman -Syu --noconfirm --noprogressbar --downloadonly --quiet)
 echo "$pacman_log"
 echo "listing  packages ready for install..."
 pacman_packages=$(pacman -Qu)
+echo "$pacman_packages"
 
 #compare with recent result
-if [ ! -f /var/log/archm-pacman-packages.log ] || [ "$(cat /var/log/archm-pacman-packages.log)" != "$pacman_packages" ]; then
+if [ "$pacman_packages" == "" ]; then
+    
+	echo "no updates available"
+
+elif [ ! -f /var/log/archm-pacman-packages.log ] || [ "$(cat /var/log/archm-pacman-packages.log)" != "$pacman_packages" ]; then
 
 	#sending out mail
 	hostname=$(cat /etc/hostname)
@@ -24,7 +29,7 @@ if [ ! -f /var/log/archm-pacman-packages.log ] || [ "$(cat /var/log/archm-pacman
 	
 else
 
-	echo "no updates are available"
+	echo "no changes"
 
 fi
 
